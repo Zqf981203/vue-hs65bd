@@ -43,9 +43,9 @@ export default {
     }
   },
   mounted: function () {
-    // setInterval(() => {
-    //   this.time = new Date().format('MM-dd hh:mm:ss');
-    // }, 1000);
+    setInterval(() => {
+      this.t = parseInt(this.t) + 1
+    }, 1000);
   },
 };
 
