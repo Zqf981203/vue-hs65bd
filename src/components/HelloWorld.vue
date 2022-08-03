@@ -32,12 +32,15 @@ export default {
   },
   methods: {
     methodTime() {
+      console.log(1)
       return `${this.time} method`;
     },
     m() {
+      console.log(2)
       return this.t;
     },
     md(){
+      console.log(3)
       return timestampToTime(Date.now())
       // console.log(1)
     }
