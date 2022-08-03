@@ -4,6 +4,13 @@
     <p>{{ time }}</p>
     <p>{{ computeTime }}</p>
     <p>{{ methodTime() }}</p>
+    <p>
+      <input v-model="t" /><span>{{ m() }}</span>
+    </p>
+    <p>
+      <div>cd: {{ cd }},{{ cd }},{{ cd }}</div>
+      <div>md: {{ md() }},{{ md() }},{{ md() }}</div>
+    </p>
   </div>
 </template>
 
@@ -12,17 +19,28 @@ export default {
   data() {
     return {
       time: new Date().format('MM-dd hh:mm:ss'),
+      t: 1,
     };
   },
   computed: {
     computeTime() {
-      return `${this.time} computed`;
+      return `${this.time} compute`;
     },
+    cd(){
+      return Date.now()
+    }
   },
   methods: {
     methodTime() {
       return `${this.time} method`;
     },
+    m() {
+      return this.t;
+    },
+    md(){
+      // console.log(1)
+      return Date.now()
+    }
   },
   mounted: function () {
     setInterval(() => {
