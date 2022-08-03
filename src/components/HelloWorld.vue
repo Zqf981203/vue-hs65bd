@@ -26,9 +26,8 @@ export default {
     computeTime() {
       return `${this.time} compute`;
     },
-    cd(){
-      console.log(2)
-      return timestampToTime(Date.now())
+    cd(){      
+      return Date.now()
     }
   },
   methods: {
@@ -39,14 +38,14 @@ export default {
       return this.t;
     },
     md(){
+      return timestampToTime(Date.now())
       // console.log(1)
-      return Date.now()
     }
   },
   mounted: function () {
-    setInterval(() => {
-      this.time = new Date().format('MM-dd hh:mm:ss');
-    }, 1000);
+    // setInterval(() => {
+    //   this.time = new Date().format('MM-dd hh:mm:ss');
+    // }, 1000);
   },
 };
 
@@ -77,7 +76,7 @@ Date.prototype.format = function (fmt) {
   return fmt;
 };
 function timestampToTime(timestamp) {
-  var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
   var Y = date.getFullYear() + '-';
   var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
   var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
