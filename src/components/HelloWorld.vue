@@ -1,57 +1,64 @@
 <template>
   <div class="hello">
-    <ul v-for="order in orderData.map(order=> {
-        return {...order, default: order.bind}
-      } )">
-      <li>
-        {{order}}
-        <input type="text" v-model='order.bind' @blur='t(order)'>
-      </li>
-    </ul>
+    <h3>time:</h3>
+    <p>{{ time }}</p>
+    <p>{{ computeTime }}</p>
+    <p>{{ methodTime() }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      orderData: []
-    }
+      time: new Date().format('MM-dd hh:mm:ss'),
+    };
   },
   computed: {
-    initedOrderData() {
-      return this.orderData.map(order=> {
-        return {...order, default: order.bind}
-      } ) || []
-    }
+    computeTime() {
+      return `${this.time} computed`;
+    },
   },
-  methods:{
-    t(a) {
-      console.log(a,this.orderData)
-    }
+  methods: {
+    methodTime() {
+      return `${this.time} method`;
+    },
   },
-  created() {
-    this.orderData = [
-      {
-        default: '',
-        bind: '123'
-      },
-      
-      {
-        default: '',
-        bind: '123'
-      },
-      
-      {
-        default: '',
-        bind: '123'
-      }
-    ]
+  mounted: function () {
+    setInterval(() => {
+      this.time = new Date().format('MM-dd hh:mm:ss');
+    }, 1000);
+  },
+};
+
+Date.prototype.format = function (fmt) {
+  var o = {
+    'M+': this.getMonth() + 1, //月份
+    'd+': this.getDate(), //日
+    'h+': this.getHours(), //小时
+    'm+': this.getMinutes(), //分
+    's+': this.getSeconds(), //秒
+    'q+': Math.floor((this.getMonth() + 3) / 3), //季度
+    S: this.getMilliseconds(), //毫秒
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(
+      RegExp.$1,
+      (this.getFullYear() + '').substr(4 - RegExp.$1.length)
+    );
   }
-}
+  for (var k in o) {
+    if (new RegExp('(' + k + ')').test(fmt)) {
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
+      );
+    }
+  }
+  return fmt;
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -66,5 +73,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello {
+  text-align: left;
 }
 </style>
