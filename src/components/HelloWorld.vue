@@ -9,7 +9,30 @@
     </p>
     <p>
       <div>cd: {{ cd }},{{ cd }},{{ cd }}</div>
-      <div>md: {{ md() }},{{ md() }},{{ md() }}</div>
+      <div>md: {{ md() }},{{ md() }},<span v-once>{{ md() }}</span></div>
+    </p>
+    <hr/>
+    <p>
+      <input type="radio" v-model="picked" value="1" id="man"/><label for="man">男</label>
+      <input type="radio" v-model="picked" value="2" id="woman"/><label for="woman">女</label>
+      <span>&nbsp;{{ picked }}</span>
+    </p>
+    <p>
+      <input type="checkbox" v-model="checked" value="1" id="baseball"/><label for="baseball">棒球</label>
+      <input type="checkbox" v-model="checked" value="2" id="basketball"/><label for="basketball">篮球</label>
+      <input type="checkbox" v-model="checked" value="3" id="football"/><label for="football">足球</label>
+      <input type="checkbox" v-model="checked" value="4" id="tennis"/><label for="tennis">网球</label>
+      <span>&nbsp;{{ checked.join(',') }}</span>
+    </p>
+    <p>
+      <select v-model="selected">
+        <option>js</option>
+        <option>html</option>
+        <option>css</option>
+        <option value="2">java</option>
+        <option v-for="opt of options" :value="opt.value">{{ opt.text }}</option>
+      </select>
+      {{selected}}
     </p>
   </div>
 </template>
@@ -20,6 +43,12 @@ export default {
     return {
       time: new Date().format('MM-dd hh:mm:ss'),
       t: 1,
+      picked: 2,
+      checked: [2,3],
+      selected: "js",
+      options:[
+        { text: "vue", value:"vue" }, { text:"react", value: 3}
+      ]
     };
   },
   computed: {
@@ -32,23 +61,19 @@ export default {
   },
   methods: {
     methodTime() {
-      console.log(1)
       return `${this.time} method`;
     },
     m() {
-      console.log(2)
       return this.t;
     },
     md(){
-      console.log(3)
       return timestampToTime(Date.now())
-      // console.log(1)
     }
   },
   mounted: function () {
-    setInterval(() => {
-      this.t = parseInt(this.t) + 1
-    }, 1000);
+    // setInterval(() => {
+    //   this.t = parseInt(this.t) + 1
+    // }, 1000);
   },
 };
 
