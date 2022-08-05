@@ -23,9 +23,11 @@
     </form>
     <ul class="messageList">
       <li class="message" v-for="(m, i) in list" :key="i">
-        <span class="name">{{ m.name }}:</span>
-        <span class="content">{{ m.message }}</span>
-        <a href="javascript:void(0);" class="reply">回复</a>
+        <div class="name">{{ m.name }}:</div>
+        <div>
+          <span class="content">{{ m.message }}</span>
+          <a @click.prevent="reply(m.name)" class="reply">回复</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -36,16 +38,7 @@ export default {
     return {
       name: '',
       content: '',
-      list: [
-        {
-          name: '王大锤',
-          message: '哈哈~',
-        },
-        {
-          name: '周起飞',
-          message: '好啊好好！！',
-        },
-      ],
+      list: [],
     };
   },
   methods: {
@@ -56,6 +49,9 @@ export default {
       });
       console.log(this.list);
       this.content = '';
+    },
+    reply(name) {
+      this.content = '@' + name;
     },
   },
 };
@@ -101,7 +97,7 @@ export default {
   position: relative;
   border-bottom: 1px solid #bbb;
 }
-.message .name {
+/* .message .name {
   float: left;
   width: 90px;
   padding-right: 15px;
@@ -121,5 +117,5 @@ export default {
   right: 15px;
   bottom: 5px;
   color: blue;
-}
+} */
 </style>
