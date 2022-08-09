@@ -23,9 +23,9 @@
     </form>
     <ul class="messageList">
       <li class="message" v-for="(m, i) in list" :key="i">
-        <div class="name">{{ m.name }}:</div>
-        <div>
-          <span class="content">{{ m.message }}</span>
+        <label class="name"> {{ m.name }}: </label>
+        <div class="content">
+          <span> {{ m.message }} </span>
           <a @click.prevent="reply(m.name)" class="reply">回复</a>
         </div>
       </li>
@@ -38,22 +38,34 @@ export default {
     return {
       name: '',
       content: '',
-      list: [],
+      list: [
+        {
+          name: '王大锤',
+          message: 'sdfhkasjdhfka',
+        },
+      ],
+      textarea: ''
     };
   },
   methods: {
     sumbit(e) {
+      if(!this.name || !this.content) {
+        return
+      }
       this.list.push({
         name: this.name,
         message: this.content,
       });
-      console.log(this.list);
       this.content = '';
     },
     reply(name) {
       this.content = '@' + name;
+      this.textarea.focus()
     },
   },
+  mounted(){
+    this.textarea = document.getElementById("content")
+  }
 };
 </script>
 <style scoped>
@@ -85,37 +97,43 @@ export default {
   margin-right: 17px;
   float: right;
 }
-.messageList {
+.messageForm {
+  margin-bottom: 25px;
+}
+.messageForm:after {
+  content: '';
   clear: both;
-  font-size: 14px;
-  margin-top: 60px;
+  display: block;
+}
+
+ul.messageList {
+  list-style: none;
+  margin: 0 auto;
 }
 .message {
-  width: 300px;
-  margin: 0 auto 8px;
   min-height: 40px;
-  position: relative;
   border-bottom: 1px solid #bbb;
+  display: flex;
+  margin-bottom: 10px;
 }
-/* .message .name {
-  float: left;
-  width: 90px;
-  padding-right: 15px;
-  font-family: cursive;
+.name {
+  flex-shrink: 0;
+  width: 60px;
   text-align: left;
-  font-size: 16px;
   color: #42b983;
 }
-.message .content {
-  text-align: left;
-  font-size: 16px;
-  float: left;
+.content {
+  position: relative;
+  padding: 0 45px 15px 0;
+  flex-grow: 1;
 }
 .reply {
   text-decoration: none;
   position: absolute;
-  right: 15px;
+  right: 0;
   bottom: 5px;
+  font-size: 14px;
   color: blue;
-} */
+  cursor: pointer;
+}
 </style>
